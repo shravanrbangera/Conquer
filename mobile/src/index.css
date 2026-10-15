@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-deep: #030712;
+  --bg-surface: rgba(15, 23, 42, 0.75);
+  --neon-cyan: #00F0FF;
+  --neon-blue: #3B82F6;
+  --neon-pink: #FF007A;
+  --neon-crimson: #FF0055;
+  --neon-emerald: #00FF9D;
+  --neon-gold: #FFD700;
+  --neon-purple: #B026FF;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: #F8FAFC;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3, h4, .font-heading {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.03em;
+}
+
+/* Ambient Background Light Glows */
+.ambient-bg {
+  position: relative;
+  background-color: #040711;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(0, 240, 255, 0.12) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(176, 38, 255, 0.12) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(255, 0, 85, 0.08) 0px, transparent 50%);
+}
+
+/* Futuristic Cyber Glassmorphism */
+.cyber-glass {
+  background: rgba(11, 17, 32, 0.78);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 0 20px rgba(0, 240, 255, 0.04);
+}
+
+.cyber-card {
+  background: linear-gradient(135deg, rgba(20, 30, 55, 0.65), rgba(10, 16, 32, 0.8));
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cyber-card:hover {
+  border-color: rgba(0, 240, 255, 0.4);
+  box-shadow: 0 12px 35px rgba(0, 240, 255, 0.25), inset 0 0 15px rgba(0, 240, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Neon Glow Utilities */
+.glow-cyan-lg {
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.5), 0 0 60px rgba(0, 240, 255, 0.2);
+}
+
+.glow-crimson-lg {
+  box-shadow: 0 0 30px rgba(FF, 0, 85, 0.5), 0 0 60px rgba(FF, 0, 85, 0.2);
+}
+
+.glow-emerald-lg {
+  box-shadow: 0 0 30px rgba(0, 255, 157, 0.5), 0 0 60px rgba(0, 255, 157, 0.2);
+}
+
+.glow-gold-lg {
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.5), 0 0 60px rgba(255, 215, 0, 0.2);
+}
+
+/* Gradient Text Shimmer */
+.gradient-cyan-text {
+  background: linear-gradient(135deg, #FFFFFF 0%, #00F0FF 50%, #0088FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-gold-text {
+  background: linear-gradient(135deg, #FFF6D1 0%, #FFD700 50%, #FFA800 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-crimson-text {
+  background: linear-gradient(135deg, #FFD1E0 0%, #FF0055 50%, #990033 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Leaflet Map Custom Styling Filters */
+.carto-dark .leaflet-tile {
+  filter: brightness(0.7) invert(1) contrast(2.2) hue-rotate(200deg) saturate(0.5);
+}
+
+.carto-satellite .leaflet-tile {
+  filter: brightness(0.95) contrast(1.1) saturate(1.2);
+}
+
+.leaflet-container {
+  background-color: #040711 !important;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Animations */
+@keyframes radar-sweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-radar {
+  animation: radar-sweep 4s linear infinite;
+}
+
+@keyframes pulse-ring-glow {
+  0% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.8);
+  }
+  70% {
+    transform: scale(1.4);
+    box-shadow: 0 0 0 25px rgba(0, 240, 255, 0);
+  }
+  100% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(0, 240, 255, 0);
+  }
+}
+
+.marker-ring-pulse {
+  animation: pulse-ring-glow 2s ease-in-out infinite;
+}
+
+@keyframes float-hero {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float-hero {
+  animation: float-hero 3s ease-in-out infinite;
+}

@@ -1,0 +1,25 @@
+{
+  "name": "conquer-monorepo",
+  "version": "1.0.0",
+  "description": "CONQUER — Own Your World (Real-World Territory Game)",
+  "scripts": {
+    "dev": "cd mobile && npm run dev",
+    "start": "cd mobile && npm run dev",
+    "dev:mobile": "cd mobile && npm run dev",
+    "dev:backend": "cd backend && npm start",
+    "flutter:run": "cd conquer_app && flutter run",
+    "flutter:analyze": "cd conquer_app && flutter analyze",
+    "flutter:test": "cd conquer_app && flutter test",
+    "install:all": "cd backend && npm install && cd ../mobile && npm install"
+  },
+  "keywords": [
+    "conquer",
+    "game",
+    "gps",
+    "territory",
+    "react",
+    "express"
+  ],
+  "author": "CONQUER Team",
+  "license": "MIT"
+}
