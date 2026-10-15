@@ -21,17 +21,8 @@ class MapTileProviderConfig {
 class MapTileProviders {
   MapTileProviders._();
 
-  /// CartoDB Dark Matter (Cyberpunk theme compliant)
-  static const MapTileProviderConfig cartoDark = MapTileProviderConfig(
-    id: 'carto_dark',
-    name: 'CartoDB Dark Matter',
-    urlTemplate: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-    subdomains: ['a', 'b', 'c', 'd'],
-    attribution: '© OpenStreetMap contributors, © CARTO',
-    maxZoom: 20,
-  );
-
-  /// OpenStreetMap Standard
+  /// Primary: OpenStreetMap Standard (Community-hosted, no API key required)
+  /// Compliant with OpenStreetMap Tile Usage Policy for dev/testing.
   static const MapTileProviderConfig openStreetMap = MapTileProviderConfig(
     id: 'osm_standard',
     name: 'OpenStreetMap Standard',
@@ -39,21 +30,46 @@ class MapTileProviders {
     subdomains: [],
     attribution: '© OpenStreetMap contributors',
     maxZoom: 19,
+    userAgentPackageName: 'com.conquer.conquer_app',
   );
 
-  /// CartoDB Voyager (Tactical Recon light mode)
-  static const MapTileProviderConfig cartoVoyager = MapTileProviderConfig(
-    id: 'carto_voyager',
-    name: 'Tactical Recon (Voyager)',
-    urlTemplate: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-    subdomains: ['a', 'b', 'c', 'd'],
-    attribution: '© OpenStreetMap contributors, © CARTO',
-    maxZoom: 19,
+  /// Secondary: CyclOSM (Pedestrian/Bicycle fitness tactical map style)
+  static const MapTileProviderConfig cyclOSM = MapTileProviderConfig(
+    id: 'cyclosm',
+    name: 'CyclOSM Tactical',
+    urlTemplate: 'https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png',
+    subdomains: ['a', 'b', 'c'],
+    attribution: 'Map data: © OpenStreetMap contributors | Style: CyclOSM',
+    maxZoom: 18,
+    userAgentPackageName: 'com.conquer.conquer_app',
   );
 
+  /// Tertiary: OpenTopoMap (Topographic terrain contour style)
+  static const MapTileProviderConfig openTopo = MapTileProviderConfig(
+    id: 'open_topo',
+    name: 'OpenTopoMap Terrain',
+    urlTemplate: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+    subdomains: ['a', 'b', 'c'],
+    attribution: 'Map data: © OpenStreetMap contributors, SRTM | Style: OpenTopoMap',
+    maxZoom: 17,
+    userAgentPackageName: 'com.conquer.conquer_app',
+  );
+
+  /// Default tile provider for CONQUER MVP: OpenStreetMap Standard
+  static const MapTileProviderConfig defaultProvider = openStreetMap;
+
+  /// Retained for backwards compatibility, redirected to OpenStreetMap to prevent CARTO watermark
+  @Deprecated('Use openStreetMap. CARTO basemaps require a paid API key.')
+  static const MapTileProviderConfig cartoDark = openStreetMap;
+
+  /// Retained for backwards compatibility, redirected to CyclOSM
+  @Deprecated('Use cyclOSM or openStreetMap. CARTO basemaps require a paid API key.')
+  static const MapTileProviderConfig cartoVoyager = cyclOSM;
+
+  /// All available zero-API-key tile providers
   static const List<MapTileProviderConfig> all = [
-    cartoDark,
     openStreetMap,
-    cartoVoyager,
+    cyclOSM,
+    openTopo,
   ];
 }

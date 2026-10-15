@@ -5,7 +5,7 @@ class MapState {
   final MapTileProviderConfig currentProvider;
 
   const MapState({
-    this.currentProvider = MapTileProviders.cartoDark,
+    this.currentProvider = MapTileProviders.openStreetMap,
   });
 
   MapState copyWith({
@@ -20,7 +20,7 @@ class MapState {
 class MapNotifier extends Notifier<MapState> {
   @override
   MapState build() {
-    return const MapState(currentProvider: MapTileProviders.cartoDark);
+    return const MapState(currentProvider: MapTileProviders.openStreetMap);
   }
 
   void setTileProvider(MapTileProviderConfig provider) {

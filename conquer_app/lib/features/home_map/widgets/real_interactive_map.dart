@@ -28,6 +28,7 @@ class _RealInteractiveMapState extends ConsumerState<RealInteractiveMap>
     with SingleTickerProviderStateMixin {
   late final MapController _mapController;
   late final AnimationController _pulseController;
+  bool _hasTileError = false;
 
   // Fallback initial coordinate anchor (used only before first GPS fix is acquired)
   static const LatLng _fallbackCenter = LatLng(13.3440, 74.7440);
@@ -114,6 +115,13 @@ class _RealInteractiveMapState extends ConsumerState<RealInteractiveMap>
               userAgentPackageName:
                   mapState.currentProvider.userAgentPackageName,
               maxZoom: mapState.currentProvider.maxZoom.toDouble(),
+              errorTileCallback: (tile, error, stackTrace) {
+                if (mounted && !_hasTileError) {
+                  setState(() {
+                    _hasTileError = true;
+                  });
+                }
+              },
             ),
 
             // B. Territory Polygon Overlays (Player Blue & Hostile Crimson)
@@ -248,14 +256,89 @@ class _RealInteractiveMapState extends ConsumerState<RealInteractiveMap>
           ],
         ),
 
-        // 2. LOCATION PERMISSION & ERROR STATE BANNER
+        // 2. TILE LOADING ERROR BANNER
+        if (_hasTileError)
+          Positioned(
+            top: 64,
+            left: 16,
+            right: 16,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: AppColors.bgSurface.withValues(alpha: 0.95),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: AppColors.neonCrimson, width: 1.2),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.neonCrimson.withValues(alpha: 0.25),
+                    blurRadius: 10,
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.wifi_off_rounded,
+                      color: AppColors.neonCrimson, size: 18),
+                  const SizedBox(width: 8),
+                  const Expanded(
+                    child: Text(
+                      'OpenStreetMap tiles could not load. Check network connection.',
+                      style: TextStyle(color: Colors.white, fontSize: 11),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        _hasTileError = false;
+                      });
+                      _mapController.move(
+                          _mapController.camera.center, _mapController.camera.zoom);
+                    },
+                    child: const Text('RETRY',
+                        style: TextStyle(color: AppColors.neonCyan, fontSize: 11)),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+        // 3. LOCATION PERMISSION & ERROR STATE BANNER
         if (locationState.permissionState != LocationPermissionState.granted)
           Positioned(
-            top: 100,
+            top: _hasTileError ? 120 : 100,
             left: 16,
             right: 16,
             child: _buildLocationStateBanner(locationState),
           ),
+
+        // 4. VISIBLE MAP ATTRIBUTION CHIP (OSM Attribution Policy Compliant)
+        Positioned(
+          left: 12,
+          bottom: 12,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: 0.75),
+              borderRadius: BorderRadius.circular(6),
+              border: Border.all(color: AppColors.borderSubtle, width: 0.8),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.public, size: 11, color: AppColors.neonCyan),
+                const SizedBox(width: 5),
+                Text(
+                  mapState.currentProvider.attribution,
+                  style: const TextStyle(
+                    color: Colors.white70,
+                    fontSize: 9,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
 
         // 3. FLOATING MAP CONTROLS (Right-hand side)
         Positioned(

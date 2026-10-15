@@ -8,7 +8,6 @@ import 'package:http/testing.dart';
 import 'package:conquer_app/data/models/territory_model.dart';
 import 'package:conquer_app/data/models/territory_event_model.dart';
 import 'package:conquer_app/data/models/conquest_result_model.dart';
-import 'package:conquer_app/data/models/notification_model.dart';
 import 'package:conquer_app/data/models/user_model.dart';
 import 'package:conquer_app/data/services/backend_territory_service.dart';
 import 'package:conquer_app/data/services/backend_activity_service.dart';
@@ -16,8 +15,6 @@ import 'package:conquer_app/data/models/gps_point.dart';
 import 'package:conquer_app/features/conquest_result/screens/conquest_result_screen.dart';
 import 'package:conquer_app/features/territory/screens/territory_screen.dart';
 import 'package:conquer_app/providers/territory_provider.dart';
-import 'package:conquer_app/providers/auth_provider.dart';
-import 'package:conquer_app/providers/notification_provider.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

@@ -164,16 +164,16 @@ void main() {
       addTearDown(container.dispose);
 
       final notifier = container.read(mapProvider.notifier);
-      expect(container.read(mapProvider).currentProvider.id, 'carto_dark');
-
-      notifier.toggleNextProvider();
       expect(container.read(mapProvider).currentProvider.id, 'osm_standard');
 
       notifier.toggleNextProvider();
-      expect(container.read(mapProvider).currentProvider.id, 'carto_voyager');
+      expect(container.read(mapProvider).currentProvider.id, 'cyclosm');
 
-      notifier.setTileProvider(MapTileProviders.cartoDark);
-      expect(container.read(mapProvider).currentProvider.id, 'carto_dark');
+      notifier.toggleNextProvider();
+      expect(container.read(mapProvider).currentProvider.id, 'open_topo');
+
+      notifier.setTileProvider(MapTileProviders.openStreetMap);
+      expect(container.read(mapProvider).currentProvider.id, 'osm_standard');
     });
   });
 }
